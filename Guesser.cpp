@@ -34,6 +34,10 @@ unsigned int Guesser::distance(string guess){
   return length_diff;
 }
 
+unsigned int Guesser::use_distance(string guess){
+  return this->distance(guess);
+}
+
 /*
   Constructor requires that the secret phrase is provided its value as
   an argument. This secret will not change for the lifespan of an instance

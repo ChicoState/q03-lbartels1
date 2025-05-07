@@ -11,15 +11,15 @@ private:
   string m_secret;
   unsigned int m_remaining;
   bool m_locked;
-
   unsigned int distance(string guess);
 
-public:
+  
+  public:
 
   Guesser(string secret);
 
   bool match(string guess);
-
+  unsigned int use_distance(string guess);
   unsigned int remaining();
 };
 #endif
