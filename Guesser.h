@@ -17,9 +17,12 @@ private:
   public:
 
   Guesser(string secret);
-
   bool match(string guess);
-  unsigned int use_distance(string guess);
   unsigned int remaining();
+
+  // ------ getters to use private functions ------ //
+  unsigned int use_distance(string guess);
+  string get_m_secret();
 };
+
 #endif

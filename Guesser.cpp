@@ -55,6 +55,10 @@ Guesser::Guesser(string secret){
   m_remaining = 3;
 }
 
+
+string Guesser::get_m_secret(){
+  return this->m_secret;
+}
 /*
   Determines and returns whether the provided guess matches the secret
   phrase. However, the function also returns false if the secret is locked,

@@ -50,3 +50,98 @@ TEST(GuesserTest, dist_longer_word){
 	ASSERT_EQ(1, object.use_distance("Secrets"));
 }
 
+// --------- CONSTRUCTOR ------------//
+TEST(GuesserTest, contructor_short){
+	Guesser object("Secret");
+	ASSERT_EQ("Secret", object.get_m_secret());
+}
+
+TEST(GuesserTest, contructor_too_long){
+	Guesser object("Secretsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+	ASSERT_EQ("Secretssssssssssssssssssssssssss", object.get_m_secret());
+}
+
+TEST(GuesserTest, contructor_just_right){
+	Guesser object("Secret");
+	ASSERT_EQ("Secret", object.get_m_secret());
+}
+
+// ------- match -------- //
+TEST(GuesserTest, first_try){
+	Guesser object("Secret");
+	ASSERT_EQ(true, object.match("Secret"));
+}
+
+TEST(GuesserTest, first_try_capital){
+	Guesser object("Secret");
+	ASSERT_EQ(false, object.match("secret"));
+}
+
+TEST(GuesserTest, second_try){
+	Guesser object("Secret");
+	ASSERT_EQ(false, object.match("Secrat"));
+	ASSERT_EQ(true, object.match("Secret"));
+}
+
+TEST(GuesserTest, third_try){
+	Guesser object("Secret");
+	ASSERT_EQ(false, object.match("Secrat"));
+	ASSERT_EQ(false, object.match("secret"));
+	ASSERT_EQ(true, object.match("Secret"));
+}
+
+TEST(GuesserTest, locked_by_brute){
+	Guesser object("Secret");
+	ASSERT_EQ(false, object.match("marbles"));
+	ASSERT_EQ(false, object.match("marbles"));
+	ASSERT_EQ(false, object.match("marbles"));
+	ASSERT_EQ(false, object.match("Secret"));
+}
+
+TEST(GuesserTest, locked_by_no_guesses){
+	Guesser object("Secret");
+	ASSERT_EQ(false, object.match("secret"));
+	ASSERT_EQ(false, object.match("secret"));
+	ASSERT_EQ(false, object.match("secret"));
+	ASSERT_EQ(false, object.match("Secret"));
+}
+
+// ------- remaining -------- //
+TEST(GuesserTest, one_wrong_guess){
+	Guesser object("Secret");
+	object.match("secret");
+	ASSERT_EQ(2, object.remaining());
+}
+
+TEST(GuesserTest, two_wrong_guess){
+	Guesser object("Secret");
+	object.match("secret");
+	object.match("secret");
+	ASSERT_EQ(1, object.remaining());
+}
+
+TEST(GuesserTest, three_wrong_guess){
+	Guesser object("Secret");
+	object.match("secret");
+	object.match("secret");
+	object.match("secret");
+	ASSERT_EQ(0, object.remaining());
+}
+
+TEST(GuesserTest, locked_on_first){
+	Guesser object("Secret");
+	ASSERT_EQ(3, object.remaining());
+	object.match("marbles");
+	ASSERT_EQ(2, object.remaining());
+	object.match("marbles");
+	ASSERT_EQ(1, object.remaining());
+	object.match("marbles");
+	ASSERT_EQ(0, object.remaining());
+	
+}
+
+
+
+
+
+
